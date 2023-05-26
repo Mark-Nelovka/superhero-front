@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksuperhero_front=self.webpackChunksuperhero_front||[]).push([[130],{270:function(n,e,r){r.r(e),r.d(e,{default:function(){return t}});var s=r(910),u=r(184);function t(){return(0,u.jsx)("main",{children:(0,u.jsx)("div",{className:"container",children:(0,u.jsx)(s.Z,{})})})}}}]);
+//# sourceMappingURL=HeroPage.48cb92d1.chunk.js.map
