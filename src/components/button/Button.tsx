@@ -1,4 +1,13 @@
-import s from "./button.module.css";
-export const Button = () => {
-  return <button>Button</button>;
+interface IButton {
+  text: string;
+  handleHero: () => void;
+  style: string;
+}
+
+export const Button = ({ text, handleHero, style }: IButton) => {
+  return (
+    <button onClick={handleHero} className={style}>
+      {text}
+    </button>
+  );
 };
