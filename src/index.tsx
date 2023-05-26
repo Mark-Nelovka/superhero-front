@@ -8,9 +8,10 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/superhero-front/hero">
+    <BrowserRouter basename="/superhero-front">
       <App />
     </BrowserRouter>
   </React.StrictMode>
