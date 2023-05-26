@@ -1,74 +1,54 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import ss from "../button/button.module.css";
 import create from "../../images/plus.svg";
 import Button from "../button";
 import s from "./form.module.css";
 import Backdrop from "../backdrop";
-import axios from "axios";
+import { IItems } from "../../types/Items";
+import { createHero } from "../../API";
 
 export const Form = () => {
   const [isOpen, setIsOPen] = useState(false);
-  const [items, setItems] = useState(false);
-  const [seeForm, setSeeForm] = useState(false);
-  const [image, setImage] = useState(null);
-  const [heroForm, setHeroForm] = useState({});
+  const [heroForm, setHeroForm] = useState<IItems>({
+    nickname: "",
+    real_name: "",
+    description: "",
+    superpowers: "",
+    phrase: "",
+    images: [],
+  });
 
-  const changeHeroDescription = (e: any) => {
+  const changeHeroDescription = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+
     setHeroForm((prevState) => {
-      if (e.target.id === "image") {
-        return { ...prevState, [e.target.id]: e.target.files };
+      if (id === "images" && e.target instanceof HTMLInputElement) {
+        return { ...prevState, [id]: e.target.files as unknown as File[] };
       } else {
-        return { ...prevState, [e.target.id]: e.target.value };
+        return { ...prevState, [id]: value };
       }
     });
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8080/create", {
-  //       headers: {
-  //         "Content-Type": "image/jpeg",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(JSON.parse(res.data.data));
-  //       // setImage(res.data.images);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  const createHero = () => {
-    // e.preventDefault();
-    // console.log(heroForm.image[0]);
-    // const formData = new FormData();
-    // if (Object.values(heroForm.image).length > 1) {
-    //   Object.values(heroForm.image).forEach((el) =>
-    //     formData.append("hero", el)
-    //   );
-    //   formData.append("description", JSON.stringify(heroForm)); // Добавляем описание картинки
-    //   axios
-    //     .post("http://localhost:8080/create/list", formData, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     })
-    //     .then((res) => console.log(res))
-    //     .catch((error) => console.log(error));
-    // } else {
-    //   formData.append("hero", heroForm.image[0]);
-    //   formData.append("description", JSON.stringify(heroForm)); // Добавляем описание картинки
-    //   axios
-    //     .post("http://localhost:8080/create/item", formData, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     })
-    //     .then((res) => console.log(res))
-    //     .catch((error) => console.log(error));
-    // }
+  const handleCreateHero = async (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await createHero(heroForm);
+    if (response) {
+      setHeroForm({
+        nickname: "",
+        real_name: "",
+        description: "",
+        superpowers: "",
+        phrase: "",
+        images: [],
+      });
+      setIsOPen(false);
+    }
   };
 
   const openForm = () => {
@@ -83,7 +63,7 @@ export const Form = () => {
           <Backdrop handleBackdrop={openForm}>
             <div className={s.containerForm}>
               <p className={s.titleForm}>Create hero!</p>
-              <form className={s.form} onSubmit={createHero}>
+              <form className={s.form} onSubmit={handleCreateHero}>
                 <label htmlFor="nickname">Nickname: </label>
                 <input
                   type="text"
@@ -117,18 +97,18 @@ export const Form = () => {
                   placeholder="Which is superpowers in hero?"
                   onChange={changeHeroDescription}
                 />
-                <label htmlFor="catch_phrase">Catch phrase: </label>
+                <label htmlFor="phrase">Catch phrase: </label>
                 <textarea
                   autoCorrect="on"
                   style={{ resize: "none" }}
-                  id="catch_phrase"
+                  id="phrase"
                   placeholder="Catch phrase about hero"
                   name="hero-phrase:"
                   onChange={changeHeroDescription}
                 />
                 <input
                   type="file"
-                  id="image"
+                  id="images"
                   multiple
                   name="hero-image"
                   accept="image/png, image/jpeg"
@@ -136,7 +116,7 @@ export const Form = () => {
                 />
                 <Button
                   type="submit"
-                  handleHero={createHero}
+                  // handleHero={createHero}
                   text="Create"
                   style={ss.buttonFormCreate}
                 />
