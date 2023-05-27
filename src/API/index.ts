@@ -1,7 +1,7 @@
 import  createHero  from "./createHero";
 import  deleteHero  from "./deleteHero";
 import  updateHero  from "./updateHero";
-import  getByNameHero  from "./getByName";
+import  getHeroById  from "./getById";
 import  getAllHero  from "./getAll";
 
-export { createHero, deleteHero, updateHero, getByNameHero, getAllHero };
+export { createHero, deleteHero, updateHero, getHeroById, getAllHero };
