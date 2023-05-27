@@ -37,7 +37,10 @@ export const Form = ({
 
     setHeroForm((prevState) => {
       if (id === "images" && e.target instanceof HTMLInputElement) {
-        return { ...prevState, [id]: e.target.files as unknown as File[] };
+        return {
+          ...prevState,
+          [id]: e.target.files as unknown as File[],
+        };
       } else {
         return { ...prevState, [id]: value };
       }
