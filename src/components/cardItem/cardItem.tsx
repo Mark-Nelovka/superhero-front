@@ -5,9 +5,11 @@ import { createPortal } from "react-dom";
 import s from "./cardItem.module.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button";
+import noFoto from "../../images/noFoto.png";
 import ss from "../button/button.module.css";
 import { IItems } from "../../types/Items";
 import Form from "../form";
+
 export default function CardItem() {
   const [fullItem, setFullItem] = useState<IItems>();
   const [isOpen, setIsOPen] = useState(false);
@@ -66,11 +68,15 @@ export default function CardItem() {
         <div className={s.heroItemContainer}>
           <div style={{ marginRight: "auto", marginLeft: "auto" }}>
             <span>
-              <img
-                src={`http://localhost:8080/images/hero/${fullItem.images[0]}`}
-                alt="Alisa"
-                width={"auto"}
-              />
+              {fullItem.images ? (
+                <img
+                  src={`http://localhost:4040/images/hero/${fullItem.images[0]}`}
+                  alt="Alisa"
+                  width={100 + "%"}
+                />
+              ) : (
+                <img src={noFoto} alt="Alisa" width={100 + "%"} />
+              )}
             </span>
             <div className={s.contentContainer}>
               {Object.entries(fullItem).map(([key, value], index) => {

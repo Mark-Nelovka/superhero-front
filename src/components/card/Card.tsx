@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IItems } from "../../types/Items";
 import { deleteHero, getAllHero } from "../../API";
+import noFoto from "../../images/noFoto.png";
 import Form from "../form";
+import Notiflix from "notiflix";
 
 export const HeroCard = (): JSX.Element => {
   const [isOpen, setIsOPen] = useState(false);
@@ -18,8 +20,8 @@ export const HeroCard = (): JSX.Element => {
   useEffect(() => {
     async function getAllItems() {
       const allItems = await getAllHero();
-      if (allItems) {
-        setItems(allItems);
+      if (JSON.parse(allItems.data).length > 0) {
+        setItems(JSON.parse(allItems.data));
       }
     }
     getAllItems();
@@ -27,9 +29,11 @@ export const HeroCard = (): JSX.Element => {
 
   const updateListAfterCreateNewHero = async () => {
     const allItems = await getAllHero();
-    if (allItems) {
-      setItems(allItems);
+    if (JSON.parse(allItems.data)) {
+      setItems(JSON.parse(allItems.data));
       setIsOPen(false);
+    } else {
+      Notiflix.Notify.failure(allItems.message);
     }
   };
 
@@ -44,7 +48,10 @@ export const HeroCard = (): JSX.Element => {
 
   const handleDeleteHero = async (heroId: number) => {
     const res = await deleteHero(heroId);
-    updateListAfterCreateNewHero();
+    console.log(res);
+    if (res) {
+      updateListAfterCreateNewHero();
+    }
   };
 
   const openForm = () => {
@@ -63,20 +70,23 @@ export const HeroCard = (): JSX.Element => {
   const formContainer = document.getElementById("backdrop");
   return (
     <>
-      <ul className={s.heroList}>
-        {items &&
-          items.length > 0 &&
-          items.map((el) => {
+      {items.length === 0 && <h1 className={s.title}>No hero yet</h1>}
+      {items && items.length > 0 && (
+        <ul className={s.heroList}>
+          {items.map((el) => {
             return (
               <li key={el.hero_id} className={s.heroItem} id="card">
                 <Link key={el.hero_id} to={`${el.hero_id}`} state={el}>
                   <span>
-                    <img
-                      src={`http://localhost:8080/images/hero/${el.images[0]}`}
-                      alt="Alisa"
-                      // height={50 + "%"}
-                      width={100 + "%"}
-                    />
+                    {el.images ? (
+                      <img
+                        src={`http://localhost:4040/images/hero/${el.images[0]}`}
+                        alt="Alisa"
+                        width={100 + "%"}
+                      />
+                    ) : (
+                      <img src={noFoto} alt="Alisa" width={100 + "%"} />
+                    )}
                   </span>
                 </Link>
                 <div className={s.contentContainer}>
@@ -100,7 +110,9 @@ export const HeroCard = (): JSX.Element => {
               </li>
             );
           })}
-      </ul>
+        </ul>
+      )}
+
       {isOpen &&
         createPortal(
           <Form
