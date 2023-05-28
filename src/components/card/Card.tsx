@@ -21,7 +21,7 @@ export const HeroCard = (): JSX.Element => {
   useEffect(() => {
     async function getAllItems() {
       const allItems = await getAllHero(1);
-
+      // console.log(allItems);
       if (JSON.parse(allItems.data)) {
         setItems(JSON.parse(allItems.data));
       } else {
@@ -67,7 +67,7 @@ export const HeroCard = (): JSX.Element => {
 
   const handleDeleteHero = async (heroId: number) => {
     const res = await deleteHero(heroId);
-    console.log(res);
+    // console.log(res);
     if (res) {
       updateListAfterCreateNewHero();
     }
@@ -110,20 +110,21 @@ export const HeroCard = (): JSX.Element => {
                     </span>
                   </Link>
                   <div className={s.contentContainer}>
-                    <p>{el.nickname}</p>
-
+                    <p data-testid="title-card">{el.nickname}</p>
                     <div className={s.buttonContainer}>
                       <Button
                         text="Update"
                         type="submit"
                         handleHero={() => handleUpdateHero(el.hero_id!)}
                         style={ss.updateButton}
+                        idForTest={"button-update-hero"}
                       />
                       <Button
                         text="Delete"
                         type="submit"
                         handleHero={() => handleDeleteHero(el.hero_id!)}
                         style={ss.deleteButton}
+                        idForTest={"button-delete-hero"}
                       />
                     </div>
                   </div>
@@ -148,6 +149,7 @@ export const HeroCard = (): JSX.Element => {
           handleHero={openForm}
           style={ss.buttonCreate}
           type="button"
+          idForTest={"button-open-form"}
         />
         <Pagination items={items} setPageCountCard={setPageCount} />
       </div>

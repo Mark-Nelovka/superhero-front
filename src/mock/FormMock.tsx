@@ -1,24 +1,8 @@
-import { useEffect, useState } from "react";
-import ss from "../button/button.module.css";
-import Button from "../button";
-import s from "./form.module.css";
-import Backdrop from "../backdrop";
-import { IItems } from "../../types/Items";
-import { createHero, updateHero } from "../../API";
+import { useState } from "react";
+import Button from "../components/button";
+import { IItems } from "../types/Items";
 
-interface IForm {
-  updateList: () => void;
-  item?: IItems;
-  openForm: () => void;
-  handleTextButton: string;
-}
-
-export const Form = ({
-  updateList,
-  item,
-  openForm,
-  handleTextButton,
-}: IForm): JSX.Element => {
+export default function FormMock() {
   const [heroForm, setHeroForm] = useState<IItems>({
     nickname: "",
     real_name: "",
@@ -27,7 +11,6 @@ export const Form = ({
     phrase: "",
     images: [],
   });
-
   const changeHeroDescription = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -46,65 +29,21 @@ export const Form = ({
       }
     });
   };
-
-  useEffect(() => {
-    if (item) {
-      setHeroForm(item);
-    }
-  }, [item]);
-
-  const handleCreateHero = async (e: React.MouseEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { dataset } = e.target as HTMLFormElement;
-    if (dataset.name === "Create") {
-      const response = await createHero(heroForm);
-      if (response) {
-        setHeroForm({
-          nickname: "",
-          real_name: "",
-          description: "",
-          superpowers: "",
-          phrase: "",
-          images: [],
-        });
-        updateList();
-      }
-    } else {
-      if (item) {
-        let updateHeroForm: any = {};
-        Object.entries(item).forEach((el) => {
-          Object.entries(heroForm).forEach((it) => {
-            if (el[0] === it[0] && el[1] !== it[1]) {
-              updateHeroForm = {
-                ...updateHeroForm,
-                hero_id: item.hero_id,
-                [it[0]]: it[1],
-              };
-            }
-          });
-        });
-        await updateHero(updateHeroForm);
-        updateList();
-      }
-    }
-  };
-
   return (
-    <Backdrop handleBackdrop={openForm}>
-      <div className={s.containerForm}>
-        <p className={s.titleForm}>Create hero!</p>
+    <div data-testid="backdrop">
+      <div>
+        <p>Create hero!</p>
         <form
           data-testid="form-for-hero"
-          data-name={handleTextButton}
-          className={s.form}
-          onSubmit={handleCreateHero}
+          //   data-name={handleTextButton}
+          //   className={s.form}
+          //   onSubmit={handleCreateHero}
         >
           <label htmlFor="nickname">Nickname: </label>
           <input
             type="text"
             autoFocus
             id="nickname"
-            data-testid="nickname"
             name="hero-nickname"
             placeholder="Hero name"
             value={heroForm.nickname}
@@ -114,7 +53,6 @@ export const Form = ({
           <input
             type="text"
             id="real_name"
-            data-testid="real_name"
             value={heroForm.real_name}
             name="hero-real_name"
             placeholder="Real name"
@@ -124,7 +62,6 @@ export const Form = ({
           <textarea
             style={{ resize: "none" }}
             id="description"
-            data-testid="description"
             value={heroForm.description}
             placeholder="Write description yout hero"
             name="hero-description:"
@@ -134,7 +71,6 @@ export const Form = ({
           <textarea
             style={{ resize: "none" }}
             id="superpowers"
-            data-testid="superpowers"
             name="superpowers"
             value={heroForm.superpowers}
             placeholder="Which is superpowers in hero?"
@@ -145,29 +81,20 @@ export const Form = ({
             autoCorrect="on"
             style={{ resize: "none" }}
             id="phrase"
-            data-testid="phrase"
             value={heroForm.phrase}
             placeholder="Catch phrase about hero"
             name="hero-phrase:"
-            onChange={changeHeroDescription}
           />
           <input
             type="file"
             id="images"
-            data-testid="file"
             multiple
             name="hero-image"
             accept="image/png, image/jpeg"
-            onChange={changeHeroDescription}
           />
-          <Button
-            type="submit"
-            text={handleTextButton}
-            style={ss.buttonFormCreate}
-            idForTest={handleTextButton}
-          />
+          <button type="submit">Create</button>
         </form>
       </div>
-    </Backdrop>
+    </div>
   );
-};
+}
