@@ -1,22 +1,30 @@
 {
   "files": {
-    "main.css": "/superhero-front/static/css/main.862bbd08.css",
-    "main.js": "/superhero-front/static/js/main.a75f7826.js",
-    "HeroPage.js": "/superhero-front/static/js/HeroPage.16e30418.chunk.js",
-    "ErrorPage.js": "/superhero-front/static/js/ErrorPage.4beda345.chunk.js",
+    "main.css": "/superhero-front/static/css/main.555d5866.css",
+    "main.js": "/superhero-front/static/js/main.351b4ebb.js",
+    "HeroPage.css": "/superhero-front/static/css/HeroPage.4d89fa8e.chunk.css",
+    "HeroPage.js": "/superhero-front/static/js/HeroPage.eb377a14.chunk.js",
+    "ErrorPage.js": "/superhero-front/static/js/ErrorPage.f6805c09.chunk.js",
     "static/js/787.ada176e0.chunk.js": "/superhero-front/static/js/787.ada176e0.chunk.js",
-    "static/media/Sup.jpeg": "/superhero-front/static/media/Sup.fa69e68507362a55b809.jpeg",
-    "static/media/test.jpeg": "/superhero-front/static/media/test.1e21e202dfc4b1403dc4.jpeg",
+    "static/js/113.5135283e.chunk.js": "/superhero-front/static/js/113.5135283e.chunk.js",
+    "static/media/slick.svg": "/superhero-front/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/superhero-front/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/superhero-front/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/superhero-front/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/superhero-front/index.html",
+    "static/media/Arrow-pag-left.svg": "/superhero-front/static/media/Arrow-pag-left.9ca24a0223842d3588b32be824724d74.svg",
+    "static/media/Arrow-pag-right.svg": "/superhero-front/static/media/Arrow-pag-right.1e992cb420da2d7bc4d4a6ec554bd89d.svg",
     "static/media/plus.svg": "/superhero-front/static/media/plus.39bc92c7a16a39be25f73037a43549c8.svg",
-    "main.862bbd08.css.map": "/superhero-front/static/css/main.862bbd08.css.map",
-    "main.a75f7826.js.map": "/superhero-front/static/js/main.a75f7826.js.map",
-    "HeroPage.16e30418.chunk.js.map": "/superhero-front/static/js/HeroPage.16e30418.chunk.js.map",
-    "ErrorPage.4beda345.chunk.js.map": "/superhero-front/static/js/ErrorPage.4beda345.chunk.js.map",
-    "787.ada176e0.chunk.js.map": "/superhero-front/static/js/787.ada176e0.chunk.js.map"
+    "main.555d5866.css.map": "/superhero-front/static/css/main.555d5866.css.map",
+    "main.351b4ebb.js.map": "/superhero-front/static/js/main.351b4ebb.js.map",
+    "HeroPage.4d89fa8e.chunk.css.map": "/superhero-front/static/css/HeroPage.4d89fa8e.chunk.css.map",
+    "HeroPage.eb377a14.chunk.js.map": "/superhero-front/static/js/HeroPage.eb377a14.chunk.js.map",
+    "ErrorPage.f6805c09.chunk.js.map": "/superhero-front/static/js/ErrorPage.f6805c09.chunk.js.map",
+    "787.ada176e0.chunk.js.map": "/superhero-front/static/js/787.ada176e0.chunk.js.map",
+    "113.5135283e.chunk.js.map": "/superhero-front/static/js/113.5135283e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.862bbd08.css",
-    "static/js/main.a75f7826.js"
+    "static/css/main.555d5866.css",
+    "static/js/main.351b4ebb.js"
   ]
 }
