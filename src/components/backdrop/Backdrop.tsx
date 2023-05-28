@@ -30,7 +30,12 @@ export const Backdrop = ({ children, handleBackdrop }: IBackdrop) => {
   }, [closeBackdrop]);
 
   return (
-    <div id="backdrop" onClick={handleClickBackdrop} className={s.backdrop}>
+    <div
+      data-testid="backdrop"
+      id="backdrop"
+      onClick={handleClickBackdrop}
+      className={s.backdrop}
+    >
       {children}
     </div>
   );

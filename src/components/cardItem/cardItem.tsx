@@ -89,11 +89,13 @@ export default function CardItem() {
             <Button
               text="Update"
               type="submit"
+              idForTest={"button-update-hero"}
               handleHero={() => handleUpdateHero()}
               style={ss.updateButton}
             />
             <Button
               text="Delete"
+              idForTest={"button-delete-hero"}
               type="submit"
               handleHero={() => handleDeleteHero(fullItem.hero_id!)}
               style={ss.deleteButton}
