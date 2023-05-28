@@ -1,6 +1,5 @@
 import s from "./pagination.module.css";
 import { useEffect, useState } from "react";
-// import { IPagProps } from "../../interfaces/pagination";
 import Notiflix from "notiflix";
 import ArrowLeft from "../../images/Arrow-pag-left.svg";
 import ArrowRight from "../../images/Arrow-pag-right.svg";
@@ -26,7 +25,6 @@ export const Pagination = ({
   useEffect(() => {
     const arrForPageCount = [];
     if (allPageCount.length === 0) {
-      const getPageCount = items.length / 5;
       for (let i = 1; i < items.length + 1; i += 1) {
         arrForPageCount.push(i);
       }

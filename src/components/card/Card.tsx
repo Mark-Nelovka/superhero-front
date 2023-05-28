@@ -16,7 +16,6 @@ export const HeroCard = (): JSX.Element => {
   const [isOpen, setIsOPen] = useState(false);
   const [handleTextButton, setHandleTextButton] = useState("");
   const [items, setItems] = useState<IItems[]>([]);
-  const [page, setPage] = useState(1);
   const [itemForForm, setItemForForm] = useState<IItems>();
 
   useEffect(() => {
@@ -39,25 +38,12 @@ export const HeroCard = (): JSX.Element => {
     ariaLabel: string;
     id: string;
   }): Promise<IItems[]> => {
-    // switch (ariaLabel) {
-    //   case "increment":
-    // setPage(+id);
     const allItems = await getAllHero(+id);
     if (JSON.parse(allItems.data).length > 0) {
       setItems(JSON.parse(allItems.data));
       return JSON.parse(allItems.data);
     }
     return JSON.parse(allItems.data);
-    //   case "decrement":
-    //     if (page === 1) {
-    //       return;
-    //     }
-    //     setPage(+id);
-    //     break;
-
-    //   default:
-    //     break;
-    // }
   };
 
   const updateListAfterCreateNewHero = async () => {
