@@ -1,0 +1,97 @@
+.paginationContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    width: 400px;
+    /* margin: 0 auto; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.paginationArrowLeftButton {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.paginationArrowLeftContainer>svg {
+    cursor: pointer;
+}
+
+.paginationArrowRightButton {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.paginationArrowRightContainer>svg {
+    cursor: pointer;
+}
+
+.paginationNumberList {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    
+}
+
+.paginationNumberList::after {
+    content: "";
+    width: 1px;
+    height: 16px;
+    border: 1px solid #f5f5f7;
+    margin-left: 14px;
+    margin-right: 14px;
+}
+
+.paginationNumberList::before {
+    content: "";
+    width: 1px;
+        height: 16px;
+            border: 1px solid #f5f5f7;
+            margin-left: 14px;
+            margin-right: 14px;
+}
+
+.paginationNumberList>li:not(:last-child) {
+    margin-right: 10px;
+}
+
+.paginationNumberListItem {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.paginationNumberListItem:hover {
+    transform: scale(1.2);
+}
+
+.paginationNumberListItemActive {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    transform: scale(1.2);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.paginationNumberListItemActive::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 0;
+    right: 0;
+    border: 1px solid rgb(73, 157, 246);
+}
+
+.paginationNumberListItemActive:hover {
+    transform: scale(1.2)
+}
