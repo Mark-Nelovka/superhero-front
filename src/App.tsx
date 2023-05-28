@@ -1,8 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import s from "./components/button/button.module.css";
-import Form from "./components/form";
-import create from "./images/plus.svg";
 import HomePage from "./pages/HomePage";
 
 const HeroPage = lazy(
@@ -20,7 +17,6 @@ function App() {
         <Route path="/:heroname" element={<HeroPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-      <Form />
     </Suspense>
   );
 }

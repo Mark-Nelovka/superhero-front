@@ -1,10 +1,16 @@
+.cardSection {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    min-height: 100vh;
+}
+
 .heroList {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     margin-right: -30px;
     margin-bottom: -15px;
-    padding: 25px;
+    min-height: 95vh;
 }
 
 .heroItem {
@@ -27,6 +33,7 @@
 }
 
 .contentContainer {
+        /* width: 50%; */
     padding: 5px 5px 10px 5px;
     text-align: center;
     border: 1px solid rgba(0, 0, 0, 0.147);
@@ -39,17 +46,8 @@
     margin-top: 15px;
 }
 
-.updateButton {
-    font-weight: 500;
-    font-size: 16px;
-    color: white;
-    background-color: rgba(73, 147, 250, 0.85);
-    padding: 3px 10px;}
-
-.deleteButton {
-    font-weight: 500;
-    font-size: 16px;
-    color: white;
-    background-color: rgba(254, 35, 35, 0.909);
-    padding: 3px 10px;
+.title {
+    font-weight: 700;
+  text-align: center;
+  margin-top: 200px;  
 }

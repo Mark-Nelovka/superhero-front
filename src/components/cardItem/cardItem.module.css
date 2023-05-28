@@ -1,0 +1,40 @@
+.heroItemContainer {
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    padding: 20px 0px 50px 0px;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.contentContainer {
+    /* width: 50%; */
+    padding: 10px 10px 10px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.147);
+}
+
+.textDesc {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+    letter-spacing: 1.1px;
+    /* margin-bottom: 7px; */
+}
+
+.textDesc:not(:last-child) {
+margin-bottom: 7px;
+}
+
+.textDesc>span {
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 15px;
+}

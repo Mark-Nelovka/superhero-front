@@ -1,6 +1,6 @@
 interface IButton {
   text: string | React.ReactNode;
-  handleHero: () => void;
+  handleHero?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   style: string;
   type: "button" | "submit";
 }
