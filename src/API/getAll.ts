@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export default async function getAllHero() {
+export default async function getAllHero(page: number) {
     try {
-        const result = await axios.get("http://localhost:4040", {
+        const result = await axios.get(`http://localhost:4040?page=${page}`, {
         headers: {
           "Content-Type": "image/jpeg",
         },
