@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PATH_BACKEND } from "../constants";
 import { IItems } from "../types/Items";
 
 export default async function updateHero(updateHero: IItems) {
@@ -6,7 +7,7 @@ export default async function updateHero(updateHero: IItems) {
     if (!updateHero.images) {
         formData.append("description", JSON.stringify(updateHero)); 
        try {
-            const res = await axios.patch(`http://localhost:4040/update/item/${updateHero.hero_id}`, formData,{
+            const res = await axios.patch(`${PATH_BACKEND}/update/item/${updateHero.hero_id}`, formData,{
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -22,7 +23,7 @@ export default async function updateHero(updateHero: IItems) {
       );
         formData.append("description", JSON.stringify(updateHero)); 
         try {
-            const res = await axios.patch(`http://localhost:4040/update/list/${updateHero.hero_id}`, formData,{
+            const res = await axios.patch(`${PATH_BACKEND}/update/list/${updateHero.hero_id}`, formData,{
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -36,7 +37,7 @@ export default async function updateHero(updateHero: IItems) {
         formData.append("description", JSON.stringify(updateHero));
         try {
             const res = await axios
-        .patch(`http://localhost:4040/update/item/${updateHero.hero_id}`, formData, {
+        .patch(`${PATH_BACKEND}/update/item/${updateHero.hero_id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

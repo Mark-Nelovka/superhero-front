@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import ss from "../button/button.module.css";
+import { createHero, updateHero } from "../../API";
 import Button from "../button";
-import s from "./form.module.css";
 import Backdrop from "../backdrop";
 import { IItems } from "../../types/Items";
-import { createHero, updateHero } from "../../API";
+import buttonStyles from "../button/button.module.css";
+import componentStyles from "./form.module.css";
+import Notiflix from "notiflix";
 
 interface IForm {
   updateList: () => void;
@@ -58,7 +59,11 @@ export const Form = ({
     const { dataset } = e.target as HTMLFormElement;
     if (dataset.name === "Create") {
       const response = await createHero(heroForm);
-      if (response) {
+      if (response.code === 409) {
+        Notiflix.Notify.warning(response.message);
+        return;
+      }
+      if (response.code === 200) {
         setHeroForm({
           nickname: "",
           real_name: "",
@@ -83,20 +88,24 @@ export const Form = ({
             }
           });
         });
-        await updateHero(updateHeroForm);
-        updateList();
+        const updateResult = await updateHero(updateHeroForm);
+        if (updateResult.code === 200) {
+          updateList();
+        } else {
+          Notiflix.Notify.info(updateResult.message);
+        }
       }
     }
   };
 
   return (
     <Backdrop handleBackdrop={openForm}>
-      <div className={s.containerForm}>
-        <p className={s.titleForm}>Create hero!</p>
+      <div className={componentStyles.containerForm}>
+        <p className={componentStyles.titleForm}>Create hero!</p>
         <form
           data-testid="form-for-hero"
           data-name={handleTextButton}
-          className={s.form}
+          className={componentStyles.form}
           onSubmit={handleCreateHero}
         >
           <label htmlFor="nickname">Nickname: </label>
@@ -163,7 +172,7 @@ export const Form = ({
           <Button
             type="submit"
             text={handleTextButton}
-            style={ss.buttonFormCreate}
+            style={buttonStyles.buttonFormCreate}
             idForTest={handleTextButton}
           />
         </form>

@@ -1,14 +1,11 @@
-import s from "./pagination.module.css";
 import { useEffect, useState } from "react";
 import Notiflix from "notiflix";
 import ArrowLeft from "../../images/Arrow-pag-left.svg";
 import ArrowRight from "../../images/Arrow-pag-right.svg";
 import { IItems } from "../../types/Items";
+import componentStyles from "./pagination.module.css";
 
-export const Pagination = ({
-  items,
-  setPageCountCard,
-}: {
+interface IPagination {
   items: IItems[];
   setPageCountCard: ({
     ariaLabel,
@@ -17,7 +14,9 @@ export const Pagination = ({
     ariaLabel: string;
     id: string;
   }) => Promise<IItems[]>;
-}) => {
+}
+
+export const Pagination = ({ items, setPageCountCard }: IPagination) => {
   const [pageActive, setPageActive] = useState(1);
   const [allPageCount, setAllPageCount] = useState<number[]>([]);
   const [pageCount, setPageCount] = useState<number[]>([]);
@@ -80,10 +79,10 @@ export const Pagination = ({
 
   return (
     <section data-testid="pagination">
-      <div className={s.paginationContainer}>
+      <div className={componentStyles.paginationContainer}>
         <button
           onClick={setPage}
-          className={s.paginationArrowLeftButton}
+          className={componentStyles.paginationArrowLeftButton}
           aria-label="decrement"
           id={String(pageActive - 1)}
         >
@@ -95,7 +94,7 @@ export const Pagination = ({
             id={String(pageActive)}
           />
         </button>
-        <ul className={s.paginationNumberList}>
+        <ul className={componentStyles.paginationNumberList}>
           {pageCount.map((pageNumber, inx) => {
             return (
               <li
@@ -105,38 +104,33 @@ export const Pagination = ({
                 aria-label={pageNumber > pageActive ? "increment" : "decrement"}
                 className={
                   pageActive === pageNumber
-                    ? s.paginationNumberListItemActive
-                    : s.paginationNumberListItem
+                    ? componentStyles.paginationNumberListItemActive
+                    : componentStyles.paginationNumberListItem
                 }
               >
                 {pageNumber}
               </li>
             );
           })}
-          {!pageCount.includes(allPageCount[allPageCount.length - 3]) && (
+          {/* {!pageCount.includes(allPageCount[allPageCount.length - 3]) && (
             <>
-              <li>
-                {pageCount.includes(allPageCount[allPageCount.length - 3])
-                  ? items.length - 1
-                  : "..."}
-              </li>
               <li
                 id={String(allPageCount.length)}
                 className={
                   pageActive === allPageCount.length
-                    ? s.paginationNumberListItemActive
-                    : s.paginationNumberListItem
+                    ? componentStyles.paginationNumberListItemActive
+                    : componentStyles.paginationNumberListItem
                 }
                 onClick={setPage}
               >
                 {allPageCount.length}
               </li>
             </>
-          )}
+          )} */}
         </ul>
         <button
           onClick={setPage}
-          className={s.paginationArrowRightButton}
+          className={componentStyles.paginationArrowRightButton}
           id={String(pageActive + 1)}
           aria-label="increment"
         >

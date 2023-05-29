@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PATH_BACKEND } from "../constants";
 import { IItems } from "../types/Items";
 
 export default async function createHero(heroForm: IItems) {
@@ -6,7 +7,7 @@ export default async function createHero(heroForm: IItems) {
   if (heroForm.images.length === 0) {
     formData.append("description", JSON.stringify(heroForm));
       try {
-            const res = await axios.post("http://localhost:4040/create/item", formData,{
+            const res = await axios.post(`${PATH_BACKEND}/create/item`, formData,{
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -22,7 +23,7 @@ export default async function createHero(heroForm: IItems) {
       );
         formData.append("description", JSON.stringify(heroForm));
         try {
-            const res = await axios.post("http://localhost:4040/create/list", formData,{
+            const res = await axios.post(`${PATH_BACKEND}/create/list`, formData,{
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -36,7 +37,7 @@ export default async function createHero(heroForm: IItems) {
         formData.append("description", JSON.stringify(heroForm));
         try {
             const res = await axios
-        .post("http://localhost:4040/create/item", formData, {
+        .post(`${PATH_BACKEND}/create/item`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
