@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Notiflix from "notiflix";
 import ArrowLeft from "../../images/Arrow-pag-left.svg";
 import ArrowRight from "../../images/Arrow-pag-right.svg";
@@ -18,23 +18,31 @@ interface IPagination {
 
 export const Pagination = ({ items, setPageCountCard }: IPagination) => {
   const [pageActive, setPageActive] = useState(1);
-  const [allPageCount, setAllPageCount] = useState<number[]>([]);
-  const [pageCount, setPageCount] = useState<number[]>([]);
+  // const [allPageCount, setAllPageCount] = useState<number[]>([]);
+  // const [pageCount, setPageCount] = useState<number[]>([1]);
 
-  useEffect(() => {
-    const arrForPageCount = [];
-    if (allPageCount.length === 0) {
-      for (let i = 1; i < items.length + 1; i += 1) {
-        arrForPageCount.push(i);
-      }
-      setAllPageCount(arrForPageCount);
-      setPageCount(arrForPageCount.slice(0, 5));
-    }
-  }, [items, allPageCount.length]);
+  // useEffect(() => {
+  //   const arrForPageCount = [];
+  //   const arrCount = [];
+  //   if (allPageCount.length === 0) {
+  //     // const pageCountStart = items.length / 5;
+  //     for (let i = 1; i < items.length + 2; i += 1) {
+  //       if (i % 5 === 0) {
+  //         arrForPageCount.push(i / 5);
+  //         arrCount.push(i / 5);
+  //       }
+  //       if (i > items.length) {
+  //         arrCount.push(arrCount[arrCount.length - 1] + 1);
+  //       }
+  //     }
+  //     setAllPageCount(arrForPageCount);
+  //     setPageCount(arrCount);
+  //   }
+  // }, [items, allPageCount.length]);
 
   const setPage = async (event: React.MouseEvent) => {
     const { ariaLabel, id } = event.currentTarget as HTMLButtonElement;
-    let count = null;
+    // let count = null;
 
     switch (ariaLabel) {
       case "increment":
@@ -45,11 +53,11 @@ export const Pagination = ({ items, setPageCountCard }: IPagination) => {
         }
         await setPageCountCard({ ariaLabel, id });
         setPageActive(+id);
-        if (pageActive + 1 > pageCount[pageCount.length - 1]) {
-          count = allPageCount.slice(+id, +id + 5);
-          setPageCount(count);
-          return;
-        }
+        // if (pageActive + 1 > pageCount[pageCount.length - 1]) {
+        //   count = allPageCount.slice(+id, +id + 5);
+        //   setPageCount(count);
+        //   return;
+        // }
         break;
       case "decrement":
         if (pageActive === 1) {
@@ -57,22 +65,23 @@ export const Pagination = ({ items, setPageCountCard }: IPagination) => {
         }
         setPageCountCard({ ariaLabel, id });
         setPageActive(+id);
-        if (pageActive - 1 < pageCount[0]) {
-          count = allPageCount.slice(+id - 6, +id - 1);
-          setPageCount(count);
-          return;
-        }
+
+        // if (pageActive - 1 < pageCount[0]) {
+        //   count = allPageCount.slice(+id - 6, +id - 1);
+        //   setPageCount(count);
+        //   return;
+        // }
         break;
 
       default:
         setPageActive(+id);
-        if (+id === allPageCount.length) {
-          count = allPageCount.slice(
-            allPageCount[allPageCount.length - 6],
-            allPageCount[allPageCount.length]
-          );
-          setPageCount(count);
-        }
+        // if (+id === allPageCount.length) {
+        //   count = allPageCount.slice(
+        //     allPageCount[allPageCount.length - 6],
+        //     allPageCount[allPageCount.length]
+        //   );
+        //   setPageCount(count);
+        // }
         break;
     }
   };
@@ -94,40 +103,7 @@ export const Pagination = ({ items, setPageCountCard }: IPagination) => {
             id={String(pageActive)}
           />
         </button>
-        <ul className={componentStyles.paginationNumberList}>
-          {pageCount.map((pageNumber, inx) => {
-            return (
-              <li
-                key={inx}
-                onClick={setPage}
-                id={String(pageNumber)}
-                aria-label={pageNumber > pageActive ? "increment" : "decrement"}
-                className={
-                  pageActive === pageNumber
-                    ? componentStyles.paginationNumberListItemActive
-                    : componentStyles.paginationNumberListItem
-                }
-              >
-                {pageNumber}
-              </li>
-            );
-          })}
-          {/* {!pageCount.includes(allPageCount[allPageCount.length - 3]) && (
-            <>
-              <li
-                id={String(allPageCount.length)}
-                className={
-                  pageActive === allPageCount.length
-                    ? componentStyles.paginationNumberListItemActive
-                    : componentStyles.paginationNumberListItem
-                }
-                onClick={setPage}
-              >
-                {allPageCount.length}
-              </li>
-            </>
-          )} */}
-        </ul>
+        <div className={componentStyles.paginationSeparator}></div>
         <button
           onClick={setPage}
           className={componentStyles.paginationArrowRightButton}

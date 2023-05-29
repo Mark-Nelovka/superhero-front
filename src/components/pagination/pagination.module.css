@@ -1,13 +1,13 @@
 .paginationContainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 24px;
     width: 400px;
-    /* margin: 0 auto; */
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .paginationArrowLeftButton {
@@ -30,36 +30,35 @@
     cursor: pointer;
 }
 
-.paginationNumberList {
+.paginationSeparator {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: auto;
-    
+    width: 150px;
 }
 
-.paginationNumberList::after {
+.paginationSeparator::after {
     content: "";
     width: 1px;
     height: 16px;
     border: 1px solid #f5f5f7;
-    margin-left: 14px;
-    margin-right: 14px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
-.paginationNumberList::before {
+.paginationSeparator::before {
     content: "";
     width: 1px;
         height: 16px;
             border: 1px solid #f5f5f7;
-            margin-left: 14px;
-            margin-right: 14px;
+            margin-left: 7px;
+            margin-right: 7px;
 }
 
-.paginationNumberList>li:not(:last-child) {
+/* .paginationNumberList>li:not(:last-child) {
     margin-right: 10px;
-}
+} */
 
 .paginationNumberListItem {
     position: relative;

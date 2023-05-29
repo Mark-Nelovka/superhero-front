@@ -42,7 +42,7 @@ export default function CardItem() {
         pathname.replace(/\D/g, "").trim()
       );
       if (response.code === 200) {
-        setFullItem(JSON.parse(response.data));
+        setFullItem(JSON.parse(response.data)[0]);
       } else {
         Notiflix.Notify.info(response.message);
       }

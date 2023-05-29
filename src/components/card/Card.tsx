@@ -21,19 +21,20 @@ export const HeroCard = (): JSX.Element => {
   useEffect(() => {
     async function getAllItems() {
       const allItems = await getAllHero(1);
-      console.log(allItems);
       if (allItems.code === 200) {
         setItems(JSON.parse(allItems.data));
       } else {
         Notiflix.Notify.info(allItems.message);
       }
     }
-    getAllItems();
-  }, []);
+    if (items.length === 0) {
+      getAllItems();
+    }
+  }, [items]);
 
   const setPageCount = async ({ id }: { id: string }): Promise<IItems[]> => {
     const allItems = await getAllHero(+id);
-    if (allItems.code === 200) {
+    if (allItems.code === 200 && JSON.parse(allItems.data).length !== 0) {
       setItems(JSON.parse(allItems.data));
       return JSON.parse(allItems.data);
     }

@@ -63,7 +63,7 @@ export const Form = ({
         Notiflix.Notify.warning(response.message);
         return;
       }
-      if (response.code === 200) {
+      if (response.code === 201) {
         setHeroForm({
           nickname: "",
           real_name: "",
