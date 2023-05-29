@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { deleteHero, getHeroById } from "../../API";
 import { createPortal } from "react-dom";
-import s from "./cardItem.module.css";
 import { useNavigate } from "react-router-dom";
+import { deleteHero, getHeroById } from "../../API";
 import Button from "../../components/button";
-import ss from "../button/button.module.css";
 import { IItems } from "../../types/Items";
 import Form from "../form";
 import SimpleSlider from "../slider/Slider";
+import componentStyles from "./cardItem.module.css";
+import buttonStyles from "../button/button.module.css";
+import Notiflix from "notiflix";
 
 export default function CardItem() {
   const [fullItem, setFullItem] = useState<IItems>();
@@ -28,22 +29,22 @@ export default function CardItem() {
 
   const handleDeleteHero = async (heroId: number) => {
     const res = await deleteHero(heroId);
-    if (res) {
+    if (res.code === 200) {
       navigation("/");
+    } else {
+      Notiflix.Notify.failure(res.message);
     }
   };
 
   useEffect(() => {
-    if (state) {
-      setFullItem(state);
-      return;
-    }
     async function getHero() {
       const response: any = await getHeroById(
         pathname.replace(/\D/g, "").trim()
       );
-      if (response) {
-        setFullItem(JSON.parse(response.data.data)[0] as IItems);
+      if (response.code === 200) {
+        setFullItem(JSON.parse(response.data));
+      } else {
+        Notiflix.Notify.info(response.message);
       }
     }
     getHero();
@@ -53,26 +54,28 @@ export default function CardItem() {
     setIsOPen(!isOpen);
   };
 
-  const updateListAfterCreateNewHero = async () => {
+  const updateListAfterUpdateHero = async () => {
     const response: any = await getHeroById(pathname.replace(/\D/g, "").trim());
-    if (response) {
-      setFullItem(JSON.parse(response.data.data)[0] as IItems);
+    if (response.code === 200) {
+      setFullItem(JSON.parse(response.data));
       setIsOPen(false);
+    } else {
+      Notiflix.Notify.info(response.data.message);
     }
   };
-  const formContainer = document.getElementById("backdrop");
 
+  const formContainer = document.getElementById("backdrop");
   return (
     <>
       {fullItem && (
-        <div className={s.heroItemContainer}>
+        <div className={componentStyles.heroItemContainer}>
           <div style={{ marginRight: "auto", marginLeft: "auto" }}>
             <SimpleSlider items={[fullItem]} />
-            <div className={s.contentContainer}>
+            <div className={componentStyles.contentContainer}>
               {Object.entries(fullItem).map(([key, value], index) => {
                 if (key !== "hero_id" && key !== "images") {
                   return (
-                    <p className={s.textDesc}>
+                    <p className={componentStyles.textDesc}>
                       <span>
                         {key.charAt(0).toUpperCase() + key.slice(1)}:{" "}
                       </span>
@@ -85,18 +88,20 @@ export default function CardItem() {
             </div>
           </div>
 
-          <div className={s.buttonContainer}>
+          <div className={componentStyles.buttonContainer}>
             <Button
               text="Update"
               type="submit"
+              idForTest={"button-update-hero"}
               handleHero={() => handleUpdateHero()}
-              style={ss.updateButton}
+              style={buttonStyles.updateButton}
             />
             <Button
               text="Delete"
+              idForTest={"button-delete-hero"}
               type="submit"
               handleHero={() => handleDeleteHero(fullItem.hero_id!)}
-              style={ss.deleteButton}
+              style={buttonStyles.deleteButton}
             />
           </div>
         </div>
@@ -107,7 +112,7 @@ export default function CardItem() {
             openForm={openForm}
             item={itemForForm}
             handleTextButton={handleTextButton}
-            updateList={updateListAfterCreateNewHero}
+            updateList={updateListAfterUpdateHero}
           />,
           formContainer as HTMLElement
         )}

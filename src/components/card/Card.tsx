@@ -1,16 +1,16 @@
 import Button from "../button";
-import s from "./card.module.css";
-import create from "../../images/plus.svg";
-import ss from "../button/button.module.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { IItems } from "../../types/Items";
-import { deleteHero, getAllHero } from "../../API";
-import noFoto from "../../images/noFoto.png";
-import Form from "../form";
 import Notiflix from "notiflix";
+import { deleteHero, getAllHero } from "../../API";
+import Form from "../form";
 import Pagination from "../pagination";
+import { IItems } from "../../types/Items";
+import noFoto from "../../images/noFoto.png";
+import create from "../../images/plus.svg";
+import componentStyles from "./card.module.css";
+import buttonStyle from "../button/button.module.css";
 
 export const HeroCard = (): JSX.Element => {
   const [isOpen, setIsOPen] = useState(false);
@@ -21,34 +21,27 @@ export const HeroCard = (): JSX.Element => {
   useEffect(() => {
     async function getAllItems() {
       const allItems = await getAllHero(1);
-
-      if (JSON.parse(allItems.data)) {
+      if (allItems.code === 200) {
         setItems(JSON.parse(allItems.data));
       } else {
-        Notiflix.Notify.info("Items not found");
+        Notiflix.Notify.info(allItems.message);
       }
     }
     getAllItems();
   }, []);
 
-  const setPageCount = async ({
-    ariaLabel,
-    id,
-  }: {
-    ariaLabel: string;
-    id: string;
-  }): Promise<IItems[]> => {
+  const setPageCount = async ({ id }: { id: string }): Promise<IItems[]> => {
     const allItems = await getAllHero(+id);
-    if (JSON.parse(allItems.data).length > 0) {
+    if (allItems.code === 200) {
       setItems(JSON.parse(allItems.data));
       return JSON.parse(allItems.data);
     }
     return JSON.parse(allItems.data);
   };
 
-  const updateListAfterCreateNewHero = async () => {
+  const updateListAfterCreateHero = async () => {
     const allItems = await getAllHero(1);
-    if (JSON.parse(allItems.data)) {
+    if (allItems.code === 200) {
       setItems(JSON.parse(allItems.data));
       setIsOPen(false);
     } else {
@@ -67,9 +60,10 @@ export const HeroCard = (): JSX.Element => {
 
   const handleDeleteHero = async (heroId: number) => {
     const res = await deleteHero(heroId);
-    console.log(res);
-    if (res) {
-      updateListAfterCreateNewHero();
+    if (res.code === 200) {
+      updateListAfterCreateHero();
+    } else {
+      Notiflix.Notify.failure(res.message);
     }
   };
 
@@ -88,69 +82,79 @@ export const HeroCard = (): JSX.Element => {
 
   const formContainer = document.getElementById("backdrop");
   return (
-    <section className={s.cardSection}>
-      <div className="container">
-        {items.length === 0 && <h1 className={s.title}>No hero yet</h1>}
-        {items && items.length > 0 && (
-          <ul className={s.heroList}>
-            {items.map((el) => {
-              return (
-                <li key={el.hero_id} className={s.heroItem} id="card">
-                  <Link key={el.hero_id} to={`${el.hero_id}`} state={el}>
-                    <span>
-                      {el.images ? (
-                        <img
-                          src={`http://localhost:4040/images/hero/${el.images[0]}`}
-                          alt="Alisa"
-                          width={100 + "%"}
-                        />
-                      ) : (
-                        <img src={noFoto} alt="Alisa" width={100 + "%"} />
-                      )}
-                    </span>
-                  </Link>
-                  <div className={s.contentContainer}>
-                    <p>{el.nickname}</p>
-
-                    <div className={s.buttonContainer}>
-                      <Button
-                        text="Update"
-                        type="submit"
-                        handleHero={() => handleUpdateHero(el.hero_id!)}
-                        style={ss.updateButton}
-                      />
-                      <Button
-                        text="Delete"
-                        type="submit"
-                        handleHero={() => handleDeleteHero(el.hero_id!)}
-                        style={ss.deleteButton}
-                      />
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
-        {isOpen &&
-          createPortal(
-            <Form
-              openForm={openForm}
-              item={itemForForm}
-              handleTextButton={handleTextButton}
-              updateList={updateListAfterCreateNewHero}
-            />,
-            formContainer as HTMLElement
+    <>
+      <section className={componentStyles.cardSection}>
+        <div className="container">
+          {items.length === 0 && (
+            <h1 className={componentStyles.title}>No hero yet</h1>
           )}
-        <Button
-          text={<img src={create} alt="Plus" />}
-          handleHero={openForm}
-          style={ss.buttonCreate}
-          type="button"
-        />
-        <Pagination items={items} setPageCountCard={setPageCount} />
-      </div>
-    </section>
+          {items && items.length > 0 && (
+            <ul className={componentStyles.heroList}>
+              {items.map((el) => {
+                return (
+                  <li
+                    key={el.hero_id}
+                    className={componentStyles.heroItem}
+                    id="card"
+                  >
+                    <Link key={el.hero_id} to={`${el.hero_id}`} state={el}>
+                      <span>
+                        {el.images ? (
+                          <img
+                            src={`http://localhost:4040/images/hero/${el.images[0]}`}
+                            alt="Alisa"
+                            width={100 + "%"}
+                          />
+                        ) : (
+                          <img src={noFoto} alt="Alisa" width={100 + "%"} />
+                        )}
+                      </span>
+                    </Link>
+                    <div className={componentStyles.contentContainer}>
+                      <p data-testid="title-card">{el.nickname}</p>
+                      <div className={componentStyles.buttonContainer}>
+                        <Button
+                          text="Update"
+                          type="submit"
+                          handleHero={() => handleUpdateHero(el.hero_id!)}
+                          style={buttonStyle.updateButton}
+                          idForTest={"button-update-hero"}
+                        />
+                        <Button
+                          text="Delete"
+                          type="submit"
+                          handleHero={() => handleDeleteHero(el.hero_id!)}
+                          style={buttonStyle.deleteButton}
+                          idForTest={"button-delete-hero"}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          {isOpen &&
+            createPortal(
+              <Form
+                openForm={openForm}
+                item={itemForForm}
+                handleTextButton={handleTextButton}
+                updateList={updateListAfterCreateHero}
+              />,
+              formContainer as HTMLElement
+            )}
+          <Button
+            text={<img src={create} alt="Plus" />}
+            handleHero={openForm}
+            style={buttonStyle.buttonCreate}
+            type="button"
+            idForTest={"button-open-form"}
+          />
+        </div>
+      </section>
+      <Pagination items={items} setPageCountCard={setPageCount} />
+    </>
   );
 };

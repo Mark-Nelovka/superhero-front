@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import ss from "../button/button.module.css";
+import { createHero, updateHero } from "../../API";
 import Button from "../button";
-import s from "./form.module.css";
 import Backdrop from "../backdrop";
 import { IItems } from "../../types/Items";
-import { createHero, updateHero } from "../../API";
+import buttonStyles from "../button/button.module.css";
+import componentStyles from "./form.module.css";
+import Notiflix from "notiflix";
 
 interface IForm {
   updateList: () => void;
@@ -58,7 +59,11 @@ export const Form = ({
     const { dataset } = e.target as HTMLFormElement;
     if (dataset.name === "Create") {
       const response = await createHero(heroForm);
-      if (response) {
+      if (response.code === 409) {
+        Notiflix.Notify.warning(response.message);
+        return;
+      }
+      if (response.code === 200) {
         setHeroForm({
           nickname: "",
           real_name: "",
@@ -83,19 +88,24 @@ export const Form = ({
             }
           });
         });
-        await updateHero(updateHeroForm);
-        updateList();
+        const updateResult = await updateHero(updateHeroForm);
+        if (updateResult.code === 200) {
+          updateList();
+        } else {
+          Notiflix.Notify.info(updateResult.message);
+        }
       }
     }
   };
 
   return (
     <Backdrop handleBackdrop={openForm}>
-      <div className={s.containerForm}>
-        <p className={s.titleForm}>Create hero!</p>
+      <div className={componentStyles.containerForm}>
+        <p className={componentStyles.titleForm}>Create hero!</p>
         <form
+          data-testid="form-for-hero"
           data-name={handleTextButton}
-          className={s.form}
+          className={componentStyles.form}
           onSubmit={handleCreateHero}
         >
           <label htmlFor="nickname">Nickname: </label>
@@ -103,6 +113,7 @@ export const Form = ({
             type="text"
             autoFocus
             id="nickname"
+            data-testid="nickname"
             name="hero-nickname"
             placeholder="Hero name"
             value={heroForm.nickname}
@@ -112,6 +123,7 @@ export const Form = ({
           <input
             type="text"
             id="real_name"
+            data-testid="real_name"
             value={heroForm.real_name}
             name="hero-real_name"
             placeholder="Real name"
@@ -121,6 +133,7 @@ export const Form = ({
           <textarea
             style={{ resize: "none" }}
             id="description"
+            data-testid="description"
             value={heroForm.description}
             placeholder="Write description yout hero"
             name="hero-description:"
@@ -130,6 +143,7 @@ export const Form = ({
           <textarea
             style={{ resize: "none" }}
             id="superpowers"
+            data-testid="superpowers"
             name="superpowers"
             value={heroForm.superpowers}
             placeholder="Which is superpowers in hero?"
@@ -140,6 +154,7 @@ export const Form = ({
             autoCorrect="on"
             style={{ resize: "none" }}
             id="phrase"
+            data-testid="phrase"
             value={heroForm.phrase}
             placeholder="Catch phrase about hero"
             name="hero-phrase:"
@@ -148,6 +163,7 @@ export const Form = ({
           <input
             type="file"
             id="images"
+            data-testid="file"
             multiple
             name="hero-image"
             accept="image/png, image/jpeg"
@@ -156,7 +172,8 @@ export const Form = ({
           <Button
             type="submit"
             text={handleTextButton}
-            style={ss.buttonFormCreate}
+            style={buttonStyles.buttonFormCreate}
+            idForTest={handleTextButton}
           />
         </form>
       </div>
