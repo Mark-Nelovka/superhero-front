@@ -1,3 +1,3 @@
-const PATH_BACKEND = "https://helpful-foal-housecoat.cyclic.app";
+const PATH_BACKEND = "http://localhost:4040";
 
-export { PATH_BACKEND };
+export { PATH_BACKEND }

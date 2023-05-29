@@ -21,6 +21,7 @@ export const HeroCard = (): JSX.Element => {
   useEffect(() => {
     async function getAllItems() {
       const allItems = await getAllHero(1);
+      console.log(allItems);
       if (allItems.code === 200) {
         setItems(JSON.parse(allItems.data));
       } else {
