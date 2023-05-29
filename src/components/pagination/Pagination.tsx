@@ -18,27 +18,6 @@ interface IPagination {
 
 export const Pagination = ({ items, setPageCountCard }: IPagination) => {
   const [pageActive, setPageActive] = useState(1);
-  // const [allPageCount, setAllPageCount] = useState<number[]>([]);
-  // const [pageCount, setPageCount] = useState<number[]>([1]);
-
-  // useEffect(() => {
-  //   const arrForPageCount = [];
-  //   const arrCount = [];
-  //   if (allPageCount.length === 0) {
-  //     // const pageCountStart = items.length / 5;
-  //     for (let i = 1; i < items.length + 2; i += 1) {
-  //       if (i % 5 === 0) {
-  //         arrForPageCount.push(i / 5);
-  //         arrCount.push(i / 5);
-  //       }
-  //       if (i > items.length) {
-  //         arrCount.push(arrCount[arrCount.length - 1] + 1);
-  //       }
-  //     }
-  //     setAllPageCount(arrForPageCount);
-  //     setPageCount(arrCount);
-  //   }
-  // }, [items, allPageCount.length]);
 
   const setPage = async (event: React.MouseEvent) => {
     const { ariaLabel, id } = event.currentTarget as HTMLButtonElement;
@@ -53,11 +32,6 @@ export const Pagination = ({ items, setPageCountCard }: IPagination) => {
         }
         await setPageCountCard({ ariaLabel, id });
         setPageActive(+id);
-        // if (pageActive + 1 > pageCount[pageCount.length - 1]) {
-        //   count = allPageCount.slice(+id, +id + 5);
-        //   setPageCount(count);
-        //   return;
-        // }
         break;
       case "decrement":
         if (pageActive === 1) {
@@ -65,23 +39,10 @@ export const Pagination = ({ items, setPageCountCard }: IPagination) => {
         }
         setPageCountCard({ ariaLabel, id });
         setPageActive(+id);
-
-        // if (pageActive - 1 < pageCount[0]) {
-        //   count = allPageCount.slice(+id - 6, +id - 1);
-        //   setPageCount(count);
-        //   return;
-        // }
         break;
 
       default:
         setPageActive(+id);
-        // if (+id === allPageCount.length) {
-        //   count = allPageCount.slice(
-        //     allPageCount[allPageCount.length - 6],
-        //     allPageCount[allPageCount.length]
-        //   );
-        //   setPageCount(count);
-        // }
         break;
     }
   };

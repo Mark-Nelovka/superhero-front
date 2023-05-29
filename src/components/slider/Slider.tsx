@@ -6,6 +6,7 @@ import ArrowRight from "../../images/Arrow-pag-right.svg";
 import { IItems } from "../../types/Items";
 import noFoto from "../../images/noFoto.png";
 import componentStyles from "./slider.module.css";
+import { PATH_BACKEND } from "../../constants";
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
@@ -57,7 +58,7 @@ export default function SimpleSlider({ items }: { items: IItems[] }) {
                 <div className={componentStyles.box} key={ind}>
                   <div>
                     <img
-                      src={`http://localhost:4040/images/hero/${it}`}
+                      src={`${PATH_BACKEND}/images/hero/${it}`}
                       placeholder="blur"
                       alt="person"
                       width={"auto"}

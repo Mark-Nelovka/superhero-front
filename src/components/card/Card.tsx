@@ -11,6 +11,7 @@ import noFoto from "../../images/noFoto.png";
 import create from "../../images/plus.svg";
 import componentStyles from "./card.module.css";
 import buttonStyle from "../button/button.module.css";
+import { PATH_BACKEND } from "../../constants";
 
 export const HeroCard = (): JSX.Element => {
   const [isOpen, setIsOPen] = useState(false);
@@ -103,12 +104,16 @@ export const HeroCard = (): JSX.Element => {
                       <span>
                         {el.images ? (
                           <img
-                            src={`http://localhost:4040/images/hero/${el.images[0]}`}
-                            alt="Alisa"
+                            src={`${PATH_BACKEND}/images/hero/${el.images[0]}`}
+                            alt="Hero item"
                             width={100 + "%"}
                           />
                         ) : (
-                          <img src={noFoto} alt="Alisa" width={100 + "%"} />
+                          <img
+                            src={noFoto}
+                            alt="Foto not yet"
+                            width={100 + "%"}
+                          />
                         )}
                       </span>
                     </Link>
